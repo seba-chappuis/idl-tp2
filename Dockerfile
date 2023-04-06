@@ -1,11 +1,5 @@
 FROM python:3.9
 
-RUN adduser --system --group nonroot
-
-USER nonroot
-
-ENTRYPOINT ["id"]
-
 WORKDIR /code
 
 COPY ./setup.py /code/setup.py
