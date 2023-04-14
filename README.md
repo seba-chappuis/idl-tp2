@@ -1,5 +1,9 @@
 # TP2 - Industrialisation du Logiciel
 
+Projet GitHub : https://github.com/seba-chappuis/idl-tp2
+
+Projet  GitLab : https://gitlab-etu.ing.he-arc.ch/sebastie.chappuis3/idl-tp2
+
 ## Exercice 1
 
 > Quelles étapes (steps) sont réalisées par cette action ?
@@ -44,3 +48,33 @@ Oui, trois code smells : deux sont un paramètre de fonction non utilisé (`defe
 > Y a-t-il des Security Hotspots ? Si oui, combien et pour quelle(s) raison(s) ?
 
 Oui, une, avec le message suivant sur la ligne `FROM python:3.9` de `/Dockerfile` : "The python image runs with root as the default user. Make sure it is safe here."
+
+## Exercice 3
+
+> Que fait le job pytest ?
+
+Le job `pytest` exécute les tests unitaires avec `pytest`.
+
+> Que fait le job image-creation ?
+
+Le job `image-creation` construit l'image Docker du projet.
+
+> Que fait le job package-creation ?
+
+Le job `package-creation` construit le package du projet.
+
+> Les jobs s’exécutent-ils dans le même ordre que défini dans le fichier ? Sinon, pourquoi ?
+
+Tous les jobs d'un même stage s'exécutent en parallèle. Si le stage d'un job n'est pas défini, il appartient au stage `test`.
+
+Par défaut, les stages (dans l'ordre de leur exécution) sont : `build`, `test` et `deploy`.
+
+Dans notre cas, le job `image-creation` appartient au stage `build` et est exécuté en premier, et les jobs `pytest` et `package-creation` appartiennent au stage `test` et sont exécutés en parallèle après le stage `build`.
+
+> Le stage 2 génère une image Docker. Où est-elle stockée et comment pouvez-vous la retrouver ?
+
+L'image Docker est accessible depuis l'onglet `Packages & Registries` de GitLab.
+
+> Le stage 3 génère un wheel Python. Où est-il stocké et comment pouvez-vous le retrouver ?
+
+Le wheel Python est stocké dans le dossier `/dist` à la racine du projet GitLab dans un fichier `.whl`.
